@@ -31,15 +31,18 @@ df7['Source'] = 'GB'
 df8['Source'] = 'FR'
 df9['Source'] = 'DE'
 df10['Source'] = 'CA'
-
+​
 #combining all the tables together
 frames = [df1,df2,df3,df4,df5,df6,df7,df8,df9,df10]
 df11 = pd.concat(frames)
-
+#checking for missing values
+df11.isnull().sum()
 #creating a unique id for every entry in the dataset
 df11['entry_id'] = df11.index if df11.index.is_monotonic_increasing else range(len(df11))
 
-df11.to_sql('Dataset1 Masterlist', con)
+df11.to_sql('DM1', con)
+
+
 
 #creating tables to match our 3NF layout
 df12 = df11.copy()
@@ -144,7 +147,8 @@ df17.to_sql('Country Table', con)
 #uploading dataset2 (make sure all the datasets are saved as CSV UTF-8)
 df18 = pd.read_csv (r'C:\CU\SQL II\Dataset 2.csv')
 df18['entry_id'] = df18.index if df18.index.is_monotonic_increasing else range(len(df18))
-
+#checking for missing values
+df18.isnull().sum()
 #creating tables to match our 3NF layout
 df19 = df18.copy()
 del df19['comments_disabled']
@@ -213,6 +217,8 @@ df21.to_sql('Dataset 2 Channel name', con)
 df22 = pd.read_json(r'C:\CU\SQL II\YouTubeDataset_withChannelElapsed.json')
 df22['entry_id'] = df22.index if df22.index.is_monotonic_increasing else range(len(df22))
 Data = 'Projects'
+#checking for missing values
+df22.isnull().sum()
 df22.to_sql(Data, con)
 
 df26 = df22.copy()
@@ -244,12 +250,16 @@ df26.to_sql('Dataset 3 Project Table 2', con)
 df23 = pd.read_csv (r'C:\CU\SQL II\Dataset 5.csv')
 df23['entry_id'] = df23.index if df23.index.is_monotonic_increasing else range(len(df23))
 Data = 'Artists'
+#checking for missing values
+df23.isnull().sum()
 df23.to_sql(Data, con)
 
 #uploading dataset4 (make sure all the datasets are saved as CSV UTF-8)
 df24 = pd.read_csv (r'C:\CU\SQL II\Dataset 4.csv')
 df24['entry_id'] = df24.index if df24.index.is_monotonic_increasing else range(len(df24))
 Data = 'Dataset 4 User Table'
+#checking for missing values
+df24.isnull().sum()
 df24.to_sql(Data, con)
 
 df25 = df24.copy()
